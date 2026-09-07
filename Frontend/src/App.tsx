@@ -127,8 +127,9 @@ function App() {
       }
 
       const contentLength = response.headers.get('content-length');
-      const totalSizeMB = contentLength ? parseInt(contentLength) / (1024 * 1024) : 0;
-      if (totalSizeMB > 0) {
+      const totalBytes = contentLength ? Number.parseInt(contentLength, 10) : 0;
+      if (totalBytes > 0) {
+        const totalSizeMB = totalBytes / (1024 * 1024);
         setTotal(`${totalSizeMB.toFixed(2)} MB`);
       } else {
         setTotal('Unknown');
@@ -150,11 +151,9 @@ function App() {
         chunks.push(value);
         receivedLength += value.length;
 
-        if (totalSizeMB > 0) {
-          const currentProgress = (receivedLength / (totalSizeMB * 1024 * 1024)) * 100;
+        if (totalBytes > 0) {
+          const currentProgress = (receivedLength / totalBytes) * 100;
           setProgress(Math.min(currentProgress, 100));
-        } else {
-          setProgress(50);
         }
 
         const now = Date.now();
@@ -170,9 +169,9 @@ function App() {
         const downloadedMB = receivedLength / (1024 * 1024);
         setDownloaded(downloadedMB > 1 ? `${downloadedMB.toFixed(2)} MB` : `${(downloadedMB * 1024).toFixed(0)} KB`);
 
-        if (totalSizeMB > 0 && receivedLength > 0) {
+        if (totalBytes > 0 && receivedLength > 0) {
           const elapsedSeconds = (now - startTime) / 1000;
-          const remainingBytes = (totalSizeMB * 1024 * 1024) - receivedLength;
+          const remainingBytes = totalBytes - receivedLength;
           const speedBps = receivedLength / elapsedSeconds;
           if (speedBps > 0) {
             const etaSeconds = remainingBytes / speedBps;

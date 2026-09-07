@@ -80,7 +80,10 @@ async def download_video(url: str = Query(...), format: str = Query("MP3"), qual
                 return StreamingResponse(
                     io.BytesIO(file_data),
                     media_type=media_type,
-                    headers={"Content-Disposition": f'attachment; filename="{title}.{ext}"'}
+                    headers={
+                        "Content-Disposition": f'attachment; filename="{title}.{ext}"',
+                        "Content-Length": str(file_size),
+                    }
                 )
             else:
                 return {"error": "No files downloaded"}

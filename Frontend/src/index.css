@@ -173,8 +173,10 @@ button {
 
 .preview-details {
   display: flex;
+  width: min(100%, 410px);
   align-items: center;
-  gap: 18px;
+  justify-content: flex-end;
+  margin-top: 2px;
 }
 
 .video-title {
@@ -188,6 +190,9 @@ button {
 }
 
 .remove-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   padding: 0;
   border: 0;
   background: transparent;
