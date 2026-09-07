@@ -9,7 +9,6 @@ export function QualitySelector({ format, selectedQuality, onQualityChange }: Qu
     if (format === 'MP3') {
       return ['320kbps', '256kbps', '128kbps'];
     } else {
-      // Added 1080P and 4K
       return ['2160P (4K)', '1080P', '720P', '480P'];
     }
   };
@@ -17,15 +16,15 @@ export function QualitySelector({ format, selectedQuality, onQualityChange }: Qu
   const qualities = getQualities();
 
   return (
-    <div className="w-full max-w-3xl flex flex-wrap gap-3 mt-2">
+    <div className="quality-list">
       {qualities.map((quality) => (
         <button
           key={quality}
           onClick={() => onQualityChange(quality)}
-          className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+          className={`quality-pill ${
             selectedQuality === quality
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+              ? 'selected'
+              : ''
           }`}
         >
           {quality}
