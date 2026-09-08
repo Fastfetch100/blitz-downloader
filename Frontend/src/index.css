@@ -36,8 +36,8 @@ button {
 }
 
 .app-panel {
-  width: min(100%, 1080px);
-  min-height: calc(100vh - 68px);
+  width: min(100%, 800px);
+  min-height: calc(80vh - 30px);
   margin: 0 auto;
   padding: 26px clamp(18px, 5vw, 58px) 34px;
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -72,8 +72,8 @@ button {
 .url-input {
   min-width: 0;
   flex: 1;
-  height: 56px;
-  padding: 0 22px;
+  height: 40px;
+  padding: 0 20px;
   border: 0;
   background: rgba(255, 255, 255, 0.95);
   color: #18212b;
@@ -94,8 +94,8 @@ button {
 }
 
 .enter-button {
-  height: 56px;
-  padding: 0 25px;
+  height: 50px;
+  padding: 0 20px;
   border: 0;
   background: #ffffff;
   color: #1a2632;
