@@ -1,145 +1,257 @@
 @import "tailwindcss";
 
+/* ========================================
+   CONFIGURATION: EASILY EDIT THESE VALUES
+   ======================================== */
+
 :root {
-  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
-  color: #ffffff;
-  background: #63717b;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  /* --- COLORS --- */
+  --primary-text: #ffffff;
+  --secondary-text: #18212b;
+  --placeholder-text: #4c5661;
+  
+  --background-base: #63717b;
+  --accent-color: #ff302e;
+  --accent-light: rgba(255, 52, 48, 0.4);
+  
+  --panel-bg-light: rgba(224, 232, 238, 0.74);
+  --panel-bg-dark: rgba(106, 125, 137, 0.45);
+  --panel-border: rgba(255, 255, 255, 0.72);
+  --panel-shadow-light: rgba(255, 255, 255, 0.64);
+  --panel-shadow-dark: rgba(30, 42, 50, 0.26);
+  
+  --input-bg: rgba(255, 255, 255, 0.95);
+  --input-focus-shadow: rgba(255, 52, 48, 0.4);
+  --input-box-shadow: rgba(29, 45, 57, 0.13);
+  
+  --gradient-overlay-light: rgba(239, 246, 251, 0.86);
+  --gradient-overlay-dark: rgba(64, 80, 90, 0.72);
+  
+  /* --- FONTS --- */
+  --font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  --font-family-mono: Consolas, monospace;
+  
+  /* --- SIZING & SPACING --- */
+  --brand-size-min: 3.4rem;
+  --brand-size-vw: 8vw;
+  --brand-size-max: 6.8rem;
+  
+  --padding-vertical-shell: 34px;
+  --padding-horizontal-shell: 22px;
+  
+  --padding-vertical-panel: 34px;
+  --padding-horizontal-panel-min: 18px;
+  --padding-horizontal-panel-vw: 5vw;
+  --padding-horizontal-panel-max: 58px;
+  --padding-top-panel: 26px;
+  
+  --input-height: 40px;
+  --button-height: 50px;
+  --input-padding-horizontal: 20px;
+  
+  --form-gap: 12px;
+  --brand-margin-bottom: 28px;
+  --form-margin-bottom: 42px;
+  
+  /* --- BORDER & RADIUS --- */
+  --panel-border-radius: 28px;
+  --panel-border-width: 1px;
+  
+  /* --- EFFECTS --- */
+  --backdrop-blur: 5px;
+  --brand-text-shadow: 3px 5px 5px rgba(37, 49, 59, 0.38);
+  --input-box-shadow-default: 0 4px 10px rgba(29, 45, 57, 0.13);
+  --panel-box-shadow-outer: 0 26px 60px rgba(30, 42, 50, 0.26);
+  --panel-box-shadow-inner: inset 0 1px rgba(255, 255, 255, 0.64);
 }
+
+/* ========================================
+   GLOBAL STYLES - Don't modify unless needed
+   ======================================== */
 
 * {
   box-sizing: border-box;
 }
 
+html,
+body {
+  font-family: var(--font-family);
+  color: var(--primary-text);
+  background: var(--background-base);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   min-width: 320px;
   min-height: 100vh;
-  margin: 0;
 }
 
 button,
 input {
   font: inherit;
+  font-family: var(--font-family);
 }
 
 button {
   cursor: pointer;
 }
 
+/* ========================================
+   MAIN CONTAINER
+   ======================================== */
+
 .app-shell {
   min-height: 100vh;
-  padding: 34px 22px;
+  padding: var(--padding-vertical-shell) var(--padding-horizontal-shell);
   background:
-    linear-gradient(135deg, rgba(239, 246, 251, 0.86), rgba(64, 80, 90, 0.72)),
+    linear-gradient(135deg, var(--gradient-overlay-light), var(--gradient-overlay-dark)),
     url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=85') center / cover fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
+/* ========================================
+   MAIN PANEL / CARD
+   ======================================== */
 
 .app-panel {
   width: min(100%, 800px);
   min-height: calc(50vh - 60px);
   margin: 0 auto;
-  padding: 26px clamp(18px, 5vw, 58px) 34px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
-  background: linear-gradient(110deg, rgba(224, 232, 238, 0.74), rgba(106, 125, 137, 0.45));
-  box-shadow: 0 26px 60px rgba(30, 42, 50, 0.26), inset 0 1px rgba(255, 255, 255, 0.64);
-  backdrop-filter: blur(5px);
+  padding: var(--padding-top-panel) clamp(var(--padding-horizontal-panel-min), var(--padding-horizontal-panel-vw), var(--padding-horizontal-panel-max)) var(--padding-vertical-panel);
+  
+  border: var(--panel-border-width) solid var(--panel-border);
+  border-radius: var(--panel-border-radius);
+  
+  background: linear-gradient(110deg, var(--panel-bg-light), var(--panel-bg-dark));
+  
+  box-shadow: var(--panel-box-shadow-outer), var(--panel-box-shadow-inner);
+  backdrop-filter: blur(var(--backdrop-blur));
 }
 
+/* ========================================
+   BRAND / TITLE
+   ======================================== */
+
 .brand-mark {
-  margin: 0 0 28px;
-  color: #ffffff;
-  font-size: clamp(3.4rem, 8vw, 6.8rem);
+  margin: 0 0 var(--brand-margin-bottom);
+  color: var(--primary-text);
+  font-size: clamp(var(--brand-size-min), var(--brand-size-vw), var(--brand-size-max));
   font-weight: 900;
   letter-spacing: 0.1em;
   line-height: 0.95;
   text-align: center;
-  text-shadow: 3px 5px 5px rgba(37, 49, 59, 0.38);
+  text-shadow: var(--brand-text-shadow);
 }
 
 .brand-mark span {
-  color: #ff302e;
+  color: var(--accent-color);
 }
+
+/* ========================================
+   INPUT FORM
+   ======================================== */
 
 .input-form {
   display: flex;
   width: 100%;
-  gap: 12px;
-  margin: 0 auto 42px;
+  gap: var(--form-gap);
+  margin: 0 auto var(--form-margin-bottom);
 }
+
+/* ========================================
+   URL INPUT FIELD
+   ======================================== */
 
 .url-input {
   min-width: 0;
   flex: 1;
-  height: 40px;
-  padding: 0 20px;
+  height: var(--input-height);
+  padding: 0 var(--input-padding-horizontal);
+  
   border: 0;
-  background: rgba(255, 255, 255, 0.95);
-  color: #18212b;
-  font-family: Consolas, monospace;
+  background: var(--input-bg);
+  color: var(--secondary-text);
+  
+  font-family: var(--font-family-mono);
   font-size: clamp(0.9rem, 2vw, 1.2rem);
   letter-spacing: 0.12em;
+  
   outline: 0;
   text-decoration: underline;
-  box-shadow: 0 4px 10px rgba(29, 45, 57, 0.13);
+  box-shadow: var(--input-box-shadow-default);
 }
 
 .url-input::placeholder {
-  color: #4c5661;
+  color: var(--placeholder-text);
 }
 
 .url-input:focus {
-  box-shadow: 0 0 0 3px rgba(255, 52, 48, 0.4);
+  box-shadow: 0 0 0 3px var(--input-focus-shadow);
 }
 
+/* ========================================
+   BUTTONS
+   ======================================== */
+
 .enter-button {
-  height: 50px;
+  height: var(--button-height);
   padding: 0 20px;
   border: 0;
-  background: #ffffff;
-  color: #1a2632;
-  font-size: 1rem;
+  background: #ffffff;                /* Change this color */
+  color: #1a2632;                     /* Change text color */
+  font-size: 1rem;                    /* Change font size */
   font-weight: 700;
   letter-spacing: 0.14em;
   transition: color 160ms ease, transform 160ms ease;
 }
 
 .enter-button:hover {
-  color: #ff302e;
+  color: #ff302e;                     /* Color on hover */
 }
 
 .enter-button:active,
 .action-button:active,
 .format-tab:active,
 .quality-pill:active {
-  transform: scale(0.97);
+  transform: scale(0.97);             /* Click animation scale */
 }
 
+/* ========================================
+   LOADING & SECTION LABELS
+   ======================================== */
+
 .loading-state {
-  padding: 30px 0;
-  color: #edf4f8;
+  padding: 30px 0;                    /* Adjust spacing */
+  color: #edf4f8;                     /* Loading text color */
   font-size: 1.05rem;
   letter-spacing: 0.12em;
   text-align: center;
 }
 
 .section-heading {
-  margin: 0 0 10px;
-  color: #ffffff;
+  margin: 0 0 10px;                   /* Spacing below heading */
+  color: #ffffff;                     /* Heading text color */
   font-size: clamp(1.45rem, 3vw, 2.25rem);
   font-weight: 400;
   letter-spacing: 0.16em;
   text-shadow: 2px 3px 3px rgba(38, 50, 58, 0.45);
 }
 
+
+/* ========================================
+   LAYOUT GRID
+   ======================================== */
+
 .workspace-grid {
   display: grid;
+  /* Change grid-template-columns to adjust layout */
   grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-  gap: clamp(30px, 7vw, 90px);
+  gap: clamp(30px, 7vw, 90px);        /* Gap between columns */
   align-items: start;
 }
 
@@ -149,23 +261,27 @@ button {
 }
 
 .controls-column {
-  padding-top: 7px;
+  padding-top: 7px;                   /* Adjust top spacing */
 }
+
+/* ========================================
+   VIDEO PREVIEW SECTION
+   ======================================== */
 
 .video-preview {
   display: flex;
   flex-direction: column;
-  gap: 13px;
-  padding-left: 10px;
+  gap: 13px;                          /* Gap between elements */
+  padding-left: 10px;                 /* Left padding */
   margin-top: 10px;
 }
 
 .thumbnail-frame {
   width: min(100%, 410px);
   padding: 3px;
-  border: 2px solid #8f2cff;
-  border-radius: 5px;
-  background: #07143d;
+  border: 2px solid #8f2cff;          /* Border color - EDIT THIS */
+  border-radius: 5px;                 /* Corner roundness */
+  background: #07143d;                /* Background color - EDIT THIS */
   box-shadow: 0 0 0 18px rgba(7, 20, 61, 0.94);
 }
 
@@ -188,20 +304,24 @@ button {
   display: none;
   overflow: hidden;
   margin: 0;
-  color: #ffffff;
+  color: #ffffff;                     /* Title text color */
   font-size: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+/* ========================================
+   REMOVE BUTTON
+   ======================================== */
+
 .remove-button {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 10px;                          /* Gap between icon & text */
   padding: 0;
   border: 0;
   background: transparent;
-  color: #ff4a37;
+  color: #ff4a37;                     /* Button color - EDIT THIS */
   font-size: clamp(1.15rem, 2.8vw, 1.65rem);
   letter-spacing: 0.17em;
   text-shadow: 1px 2px 2px rgba(48, 54, 57, 0.3);
@@ -209,83 +329,99 @@ button {
 }
 
 .remove-button:hover {
-  color: #ffb04a;
+  color: #ffb04a;                     /* Hover color - EDIT THIS */
 }
+
+
+
+/* ========================================
+   FORMAT TABS (MP3 / MP4)
+   ======================================== */
 
 .format-tabs {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 25px;                          /* Gap between tabs */
   margin-bottom: 20px;
 }
 
 .format-tab {
   align-self: center;
   min-width: 170px;
-  padding: 10px 23px;
+  padding: 10px 23px;                 /* Adjust padding to change tab size */
   border: 0;
-  background: rgba(183, 196, 205, 0.43);
-  color: #0b1c43;
+  background: rgba(183, 196, 205, 0.43);  /* Unselected tab color - EDIT THIS */
+  color: #0b1c43;                     /* Tab text color - EDIT THIS */
   font-size: clamp(1.5rem, 3vw, 2.15rem);
   letter-spacing: 0.2em;
   text-shadow: 1px 2px 2px rgba(255, 255, 255, 0.25);
 }
 
 .format-tab.selected {
-  background: rgba(196, 207, 215, 0.66);
+  background: rgba(196, 207, 215, 0.66);  /* Selected tab color - EDIT THIS */
 }
+
+/* ========================================
+   QUALITY SELECTOR PILLS
+   ======================================== */
 
 .quality-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: 12px;                          /* Gap between pills */
 }
 
 .quality-pill {
-  padding: 10px 14px;
-  border: 5px solid rgba(16, 26, 32, 0.72);
+  padding: 10px 14px;                 /* Adjust padding to change pill size */
+  border: 5px solid rgba(16, 26, 32, 0.72);  /* Border color */
   border-radius: 999px;
-  background: rgba(171, 184, 192, 0.54);
-  color: #ffffff;
+  background: rgba(171, 184, 192, 0.54);     /* Unselected pill color - EDIT THIS */
+  color: #ffffff;                     /* Text color - EDIT THIS */
   font-size: 1rem;
   font-weight: 700;
   transition: background 160ms ease, transform 160ms ease;
 }
 
 .quality-pill:hover {
-  background: rgba(218, 227, 231, 0.7);
+  background: rgba(218, 227, 231, 0.7);      /* Hover color - EDIT THIS */
 }
 
 .quality-pill.selected {
   border-color: transparent;
-  background: linear-gradient(100deg, #c3d42f, #3dff07);
+  background: linear-gradient(100deg, #c3d42f, #3dff07);  /* Selected gradient - EDIT THIS */
 }
+
+
+
+/* ========================================
+   PROGRESS BAR & STATS
+   ======================================== */
 
 .progress-card {
   width: min(100%, 410px);
-  margin-top: 26px;
+  margin-top: 26px;                   /* Space from above */
   color: #ffffff;
 }
 
 .progress-track {
   position: relative;
-  height: 25px;
+  height: 25px;                       /* Change to make bar taller/shorter */
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(224, 232, 238, 0.82);
+  background: rgba(224, 232, 238, 0.82);  /* Track background - EDIT THIS */
 }
 
 .progress-fill {
   height: 100%;
   min-width: 0;
   border-radius: inherit;
-  background: #ff6235;
+  background: #ff6235;                /* Progress bar color - EDIT THIS */
   transition: width 300ms ease;
 }
 
 .progress-fill[style*="100%"] {
-  background: #83df59;
+  background: #83df59;                /* Completed color - EDIT THIS */
 }
 
 .progress-label {
@@ -293,91 +429,111 @@ button {
   inset: 0;
   display: grid;
   place-items: center;
-  color: #ffffff;
-  font-size: 0.78rem;
+  color: #ffffff;                     /* Label text color - EDIT THIS */
+  font-size: 0.78rem;                 /* Label text size */
   font-weight: 700;
 }
+
+/* ========================================
+   DOWNLOAD STATS
+   ======================================== */
 
 .stats-row {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 2px;                           /* Gap between stat lines */
   margin-top: 10px;
-  font-family: Consolas, monospace;
+  font-family: var(--font-family-mono);
   font-size: 0.95rem;
   letter-spacing: 0.08em;
 }
 
 .stat-label {
-  color: #f4f7f8;
+  color: #f4f7f8;                     /* Label color - EDIT THIS */
 }
 
 .stat-value {
-  color: #ffffff;
+  color: #ffffff;                     /* Value color - EDIT THIS */
 }
 
 .speed-value {
-  color: #f0f5f6;
+  color: #f0f5f6;                     /* Speed text color - EDIT THIS */
 }
 
 .eta-value {
-  color: #f7eea8;
+  color: #f7eea8;                     /* ETA text color - EDIT THIS */
 }
+
+
+
+/* ========================================
+   ACTION BUTTONS (Start, Pause, Resume, Done)
+   ======================================== */
 
 .action-row {
   display: flex;
   width: min(100%, 410px);
-  margin-top: 24px;
+  margin-top: 24px;                   /* Space from above */
 }
 
 .action-button {
   min-width: 150px;
-  padding: 10px 24px;
+  padding: 10px 24px;                 /* Adjust to change button size */
   border: 0;
-  background: rgba(185, 198, 207, 0.52);
-  color: #71ec48;
+  background: rgba(185, 198, 207, 0.52);  /* Button background - EDIT THIS */
+  color: #71ec48;                     /* Button text color - EDIT THIS */
   font-size: 1.55rem;
   letter-spacing: 0.16em;
   transition: color 160ms ease, transform 160ms ease;
 }
 
 .action-button:hover {
-  color: #ffffff;
+  color: #ffffff;                     /* Hover color - EDIT THIS */
 }
 
 .start-button {
-    margin-top: 10px;    /* Space from top */
-    margin-left: 60px;   /* Pushes it right (increase or decrease this number) */
-    color: #32bc00;
+  margin-top: 10px;                   /* Space from top */
+  margin-left: 60px;                  /* Pushes button right (EDIT THIS to reposition) */
+  color: #32bc00;                     /* Start button color - EDIT THIS */
 }
 
 .pause-button {
-  color: #ff392f;
+  color: #ff392f;                     /* Pause button color - EDIT THIS */
 }
 
 .resume-button,
 .done-button {
-  color: #77ed4b;
+  color: #77ed4b;                     /* Resume/Done color - EDIT THIS */
 }
+
+/* ========================================
+   FORMAT SUMMARY
+   ======================================== */
 
 .format-summary {
   width: fit-content;
-  margin: 18px 0 0;
+  margin: 18px 0 0;                   /* Adjust spacing */
   padding: 5px 10px;
-  background: rgba(186, 198, 207, 0.5);
-  color: #ffffff;
-  font-family: Consolas, monospace;
+  background: rgba(186, 198, 207, 0.5);  /* Background color - EDIT THIS */
+  color: #ffffff;                     /* Text color - EDIT THIS */
+  font-family: var(--font-family-mono);
   font-size: 0.94rem;
   letter-spacing: 0.08em;
 }
 
 .format-summary strong:first-of-type {
-  color: #ff6039;
+  color: #ff6039;                     /* First highlight color - EDIT THIS */
 }
 
 .format-summary strong:last-of-type {
-  color: #f4df3c;
+  color: #f4df3c;                     /* Second highlight color - EDIT THIS */
 }
+
+
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
 
 @keyframes shimmer {
   0% { background-position: -200% 0; }
@@ -399,14 +555,19 @@ button {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+/* ========================================
+   RESPONSIVE DESIGN (Mobile & Tablets)
+   Maintains responsive behavior as browser shrinks
+   ======================================== */
+
 @media (max-width: 760px) {
   .app-shell {
-    padding: 12px;
+    padding: 12px;                    /* Mobile shell padding */
   }
 
   .app-panel {
     min-height: calc(100vh - 24px);
-    border-radius: 18px;
+    border-radius: 18px;              /* Smaller border radius on mobile */
     padding: 26px 18px 30px;
   }
 
@@ -416,16 +577,16 @@ button {
   }
 
   .input-form {
-    flex-direction: column;
+    flex-direction: column;            /* Stack inputs on mobile */
     margin-bottom: 34px;
   }
 
   .enter-button {
-    width: 100%;
+    width: 100%;                       /* Full width button on mobile */
   }
 
   .workspace-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr;        /* Single column on mobile */
     gap: 30px;
   }
 
@@ -441,7 +602,7 @@ button {
   }
 
   .format-tabs {
-    flex-direction: row;
+    flex-direction: row;               /* Side-by-side tabs on mobile */
     justify-content: center;
   }
 
