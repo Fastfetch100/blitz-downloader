@@ -5,6 +5,8 @@ import yt_dlp
 import io
 import tempfile
 import os
+import re
+import unicodedata
 
 # --- 🔥 HARDCODED FFMPEG PATH (FOUND ON YOUR SYSTEM) ---
 FFMPEG_LOCATION = r"C:\Users\krieg\AppData\Local\Microsoft\WinGet\Packages\Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe\ffmpeg-9.0.1-full_build\bin\ffmpeg.exe"
@@ -18,6 +20,25 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def sanitize_filename(filename: str) -> str:
+    """Remove special characters and convert to ASCII-safe filename"""
+    # Normalize unicode characters
+    filename = unicodedata.normalize('NFKD', filename)
+    # Remove non-ASCII characters
+    filename = filename.encode('ascii', 'ignore').decode('ascii')
+    # Remove special characters, keep only alphanumeric, spaces, and dashes
+    filename = re.sub(r'[^a-zA-Z0-9\s._-]', '', filename)
+    # Replace multiple spaces with single space
+    filename = re.sub(r'\s+', ' ', filename)
+    # Replace spaces with underscores
+    filename = filename.replace(' ', '_')
+    # Remove leading/trailing dots and dashes
+    filename = filename.strip('._-')
+    # If filename is empty, use default
+    if not filename:
+        filename = 'video'
+    return filename
 
 @app.get("/download")
 async def download_video(url: str = Query(...), format: str = Query("MP3"), quality: str = Query("320kbps")):
@@ -77,12 +98,21 @@ async def download_video(url: str = Query(...), format: str = Query("MP3"), qual
                 with open(file_path, "rb") as f:
                     file_data = f.read()
                 
+                # Create BytesIO and ensure it's ready to stream
+                file_stream = io.BytesIO(file_data)
+                file_stream.seek(0)
+                
+                # Sanitize filename to prevent encoding issues
+                safe_filename = sanitize_filename(title)
+                
                 return StreamingResponse(
-                    io.BytesIO(file_data),
+                    file_stream,
                     media_type=media_type,
                     headers={
-                        "Content-Disposition": f'attachment; filename="{title}.{ext}"',
+                        "Content-Disposition": f'attachment; filename="{safe_filename}.{ext}"',
                         "Content-Length": str(file_size),
+                        "Content-Type": media_type,
+                        "Cache-Control": "no-cache",
                     }
                 )
             else:

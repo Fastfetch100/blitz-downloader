@@ -115,7 +115,9 @@ function App() {
     abortControllerRef.current = new AbortController();
 
     try {
-      const backendUrl = `http://localhost:8000/download?url=${encodeURIComponent(videoUrl)}&format=${selectedFormat}&quality=${encodeURIComponent(selectedQuality)}`;
+      // Use the current hostname (works on phone and desktop)
+      const backendHost = window.location.hostname;
+      const backendUrl = `http://${backendHost}:8000/download?url=${encodeURIComponent(videoUrl)}&format=${selectedFormat}&quality=${encodeURIComponent(selectedQuality)}`;
 
       const response = await fetch(backendUrl, {
         signal: abortControllerRef.current.signal,
@@ -194,15 +196,23 @@ function App() {
       a.href = urlObject;
 
       const contentDisposition = response.headers.get('content-disposition');
+      const contentType = response.headers.get('content-type') || 'application/octet-stream';
       let filename = 'download.mp4';
       if (contentDisposition) {
         const match = contentDisposition.match(/filename="(.+)"/);
         if (match) filename = match[1];
       }
+      
+      // Create blob with correct media type to prevent corruption
+      const properBlob = new Blob(chunks, { type: contentType });
+      const properUrl = URL.createObjectURL(properBlob);
+      a.href = properUrl;
+      
       a.download = filename;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      URL.revokeObjectURL(properUrl);
       URL.revokeObjectURL(urlObject);
 
       setProgress(100);
