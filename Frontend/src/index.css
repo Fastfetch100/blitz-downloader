@@ -33,11 +33,14 @@ button {
   background:
     linear-gradient(135deg, rgba(239, 246, 251, 0.86), rgba(64, 80, 90, 0.72)),
     url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=85') center / cover fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .app-panel {
   width: min(100%, 800px);
-  min-height: calc(80vh - 30px);
+  min-height: calc(50vh - 60px);
   margin: 0 auto;
   padding: 26px clamp(18px, 5vw, 58px) 34px;
   border: 1px solid rgba(255, 255, 255, 0.72);
@@ -99,7 +102,7 @@ button {
   border: 0;
   background: #ffffff;
   color: #1a2632;
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   transition: color 160ms ease, transform 160ms ease;
@@ -152,7 +155,9 @@ button {
 .video-preview {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 13px;
+  padding-left: 10px;
+  margin-top: 10px;
 }
 
 .thumbnail-frame {
@@ -176,7 +181,7 @@ button {
   width: min(100%, 410px);
   align-items: center;
   justify-content: flex-end;
-  margin-top: 2px;
+  margin-top: 10px;
 }
 
 .video-title {
@@ -192,7 +197,7 @@ button {
 .remove-button {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -341,7 +346,9 @@ button {
 }
 
 .start-button {
-  margin: 0 auto;
+    margin-top: 10px;    /* Space from top */
+    margin-left: 60px;   /* Pushes it right (increase or decrease this number) */
+    color: #32bc00;
 }
 
 .pause-button {
