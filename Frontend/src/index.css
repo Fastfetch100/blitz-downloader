@@ -221,7 +221,7 @@ button {
 
 .format-tab {
   align-self: center;
-  min-width: 140px;
+  min-width: 170px;
   padding: 10px 23px;
   border: 0;
   background: rgba(183, 196, 205, 0.43);
@@ -244,7 +244,7 @@ button {
 
 .quality-pill {
   padding: 10px 14px;
-  border: 3px solid rgba(16, 26, 32, 0.72);
+  border: 5px solid rgba(16, 26, 32, 0.72);
   border-radius: 999px;
   background: rgba(171, 184, 192, 0.54);
   color: #ffffff;
@@ -259,7 +259,7 @@ button {
 
 .quality-pill.selected {
   border-color: transparent;
-  background: linear-gradient(100deg, #e06a64, #7851d4);
+  background: linear-gradient(100deg, #c3d42f, #3dff07);
 }
 
 .progress-card {
