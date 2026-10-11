@@ -119,7 +119,7 @@ button {
    ======================================== */
 
 .app-panel {
-  width: min(100%, 800px);
+  width: min(100%, 1000px);
   min-height: calc(50vh - 60px);
   margin: 0 auto;
   padding: var(--padding-top-panel) clamp(var(--padding-horizontal-panel-min), var(--padding-horizontal-panel-vw), var(--padding-horizontal-panel-max)) var(--padding-vertical-panel);
